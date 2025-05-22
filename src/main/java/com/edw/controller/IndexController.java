@@ -2,6 +2,7 @@ package com.edw.controller;
 
 import com.edw.service.UserService;
 
+import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -35,14 +36,10 @@ public class IndexController extends HttpServlet {
         String customerId = request.getParameter("customerId");
         List<Map> result = userService.select(customerId, 0, 10);
 
-        response.setContentType("text/html");
+        response.setContentType("application/json");
 
         PrintWriter out = response.getWriter();
-        out.println("<h1> Success </h1>");
-        for (int i = 0; i < result.size(); i++) {
-            out.println(result.get(i)+" <br />");
-        }
-
+        out.println(new Gson().toJson(result));
     }
 
 }
